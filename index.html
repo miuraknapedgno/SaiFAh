@@ -90,30 +90,37 @@
 </audio>
 
 <script>
-  // เสียงใหม่ (ชัวร์กว่า catbox)
-const clickSound = new Audio("https://actions.google.com/sounds/v1/cartoon/pop.ogg");
-const heartSound = new Audio("https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg");
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const angry = document.getElementById("angry");
+  let yesCount = 0;
 
-// โหลดเสียงล่วงหน้า
-clickSound.load();
-heartSound.load();
+  // Sounds
+  const clickSound = new Audio("https://actions.google.com/sounds/v1/cartoon/pop.ogg");
+  const heartSound = new Audio("https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg");
+  clickSound.load();
+  heartSound.load();
 
+  // Background music
+  const bgm = new Audio("https://actions.google.com/sounds/v1/ambiences/birds_in_forest.ogg");
+  bgm.loop = true;
 
-  // NO BUTTON RUNS AWAY RANDOMLY
+  // NO button runs away
   noBtn.addEventListener("mouseover", () => {
+    bgm.play().catch(()=>{});
+    clickSound.play().catch(()=>{});
     angry.style.opacity = 1;
     const x = Math.random() * (window.innerWidth - 120);
     const y = Math.random() * (window.innerHeight - 120);
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
     setTimeout(() => angry.style.opacity = 0, 500);
-  clickSound.play().catch(()=>{});
+  });
 
-
-  // YES BUTTON LOGIC
+  // YES button logic
   yesBtn.addEventListener("click", () => {
+    bgm.play().catch(()=>{});
     clickSound.play().catch(()=>{});
-
     yesCount++;
 
     if (yesCount === 1) {
@@ -121,12 +128,11 @@ heartSound.load();
       return;
     }
     if (yesCount === 2) {
-      document.querySelector("h1").innerHTML = "ชัวร์นะ ขออีกทีนึง 🙄";
+      document.querySelector("h1").innerHTML = "ชัวร์นะ อย่าแฟ่ดนะ ขออีกทีนึง 🙄";
       return;
     }
 
-    // 3rd YES → Heart explosion
-    document.querySelector("h1").innerHTML = "งั้นก็เลิกแฟ่ดแล้ว มาเป็นแฟนพี่น้อง 💗";
+    document.querySelector("h1").innerHTML = "งั้นก็เลิกแฟ่นแล้ว มาเป็นแฟนพี่น้อง 💗";
 
     for (let i = 0; i < 30; i++) {
       const heart = document.createElement("div");
@@ -140,7 +146,7 @@ heartSound.load();
     }
 
     heartSound.play().catch(()=>{});
-
+  });
 </script>
 </body>
 </html>
