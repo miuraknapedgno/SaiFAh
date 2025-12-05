@@ -90,15 +90,14 @@
 </audio>
 
 <script>
-  const yesBtn = document.getElementById("yesBtn");
-  const noBtn = document.getElementById("noBtn");
-  const angry = document.getElementById("angry");
+  // เสียงใหม่ (ชัวร์กว่า catbox)
+const clickSound = new Audio("https://actions.google.com/sounds/v1/cartoon/pop.ogg");
+const heartSound = new Audio("https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg");
 
-  let yesCount = 0;
+// โหลดเสียงล่วงหน้า
+clickSound.load();
+heartSound.load();
 
-  // Sound effects
-  const clickSound = new Audio("https://files.catbox.moe/2ijh7s.mp3"); // generic click
-  const heartSound = new Audio("https://files.catbox.moe/4y9p1g.mp3"); // heart explode
 
   // NO BUTTON RUNS AWAY RANDOMLY
   noBtn.addEventListener("mouseover", () => {
@@ -108,12 +107,13 @@
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
     setTimeout(() => angry.style.opacity = 0, 500);
-    clickSound.play();
-  });
+  clickSound.play().catch(()=>{});
+
 
   // YES BUTTON LOGIC
   yesBtn.addEventListener("click", () => {
-    clickSound.play();
+    clickSound.play().catch(()=>{});
+
     yesCount++;
 
     if (yesCount === 1) {
@@ -139,8 +139,8 @@
       setTimeout(() => heart.remove(), 2000);
     }
 
-    heartSound.play();
-  });
+    heartSound.play().catch(()=>{});
+
 </script>
 </body>
 </html>
