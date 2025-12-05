@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Love Page</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffb6d5, #ff9ac2);
+    font-family: "Arial", sans-serif;
+    overflow: hidden;
+  }
+
+  h1 {
+    font-size: 3rem;
+    color: #ffffff;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+  }
+
+  .name-banner {
+    position: absolute;
+    top: 20px;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+  }
+
+  button {
+    padding: 15px 35px;
+    margin: 10px;
+    border: none;
+    border-radius: 40px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  #yesBtn {
+    background-color: #ff4f8b;
+    color: white;
+    box-shadow: 0 4px 10px rgba(255,0,100,0.3);
+  }
+
+  #noBtn {
+    background-color: #ffffff;
+    color: #ff4f8b;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    position: absolute;
+  }
+
+  .angry-emoji {
+    font-size: 3rem;
+    position: absolute;
+    top: -60px;
+    opacity: 0;
+    transition: 0.2s;
+  }
+
+  .heart {
+    position: absolute;
+    font-size: 2rem;
+    animation: floatUp 2s linear infinite;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-200px); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="name-banner">สายฟ้า 💗 อุนจิ 💗 สิงแตด</div>
+<h1>Wanna be mine?</h1>
+<div class="angry-emoji" id="angry">😠</div>
+
+<button id="yesBtn">YES</button>
+<button id="noBtn">NO</button>
+
+<audio id="bgm" autoplay loop>
+  <source src="https://files.catbox.moe/9i7e4n.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const angry = document.getElementById("angry");
+
+  let yesCount = 0;
+
+  // Sound effects
+  const clickSound = new Audio("https://files.catbox.moe/2ijh7s.mp3"); // generic click
+  const heartSound = new Audio("https://files.catbox.moe/4y9p1g.mp3"); // heart explode
+
+  // NO BUTTON RUNS AWAY RANDOMLY
+  noBtn.addEventListener("mouseover", () => {
+    angry.style.opacity = 1;
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 120);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+    setTimeout(() => angry.style.opacity = 0, 500);
+    clickSound.play();
+  });
+
+  // YES BUTTON LOGIC
+  yesBtn.addEventListener("click", () => {
+    clickSound.play();
+    yesCount++;
+
+    if (yesCount === 1) {
+      document.querySelector("h1").innerHTML = "กดผิดป่าว ขออีกรอบนะ 😳";
+      return;
+    }
+    if (yesCount === 2) {
+      document.querySelector("h1").innerHTML = "ชัวร์นะ อย่าแฟ่ดนะ ขออีกทีนึง 🙄";
+      return;
+    }
+
+    // 3rd YES → Heart explosion
+    document.querySelector("h1").innerHTML = "งั้นก็เลิกแฟ่นแล้ว มาเป็นแฟนพี่น้อง 💗";
+
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = window.innerHeight + "px";
+      heart.style.fontSize = (Math.random() * 40 + 20) + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 2000);
+    }
+
+    heartSound.play();
+  });
+</script>
+</body>
+</html>
